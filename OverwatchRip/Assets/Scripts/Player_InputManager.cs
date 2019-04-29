@@ -6,6 +6,11 @@ using System;
 [RequireComponent(typeof(Player_Movement))]
 public class Player_InputManager : MonoBehaviour
 {
+    public event Action OnFire;
+    public event Action OnFire2;
+    public event Action OnSpecial;
+    public event Action OnUlt;
+
     public float horizontal;
     public float vertical;
 
@@ -60,22 +65,22 @@ public class Player_InputManager : MonoBehaviour
 
         if (Input.GetButtonDown(fireButton))
         {
-            //fire1 stuff
+            OnFire();
         }
 
         if (Input.GetButtonDown(fire2Button))
         {
-            //fire2 stuff
+            OnFire2();
         }
 
         if (Input.GetButtonDown(specialButton))
         {
-            //special ability
+            OnSpecial();
         }
 
         if (Input.GetButtonDown(ultButton))
         {
-            //ult stuff
+            OnUlt();
         }
 
         playerMove.isRunning = Input.GetButton(runButton);
