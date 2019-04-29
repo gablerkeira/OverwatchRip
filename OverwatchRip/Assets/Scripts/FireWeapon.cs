@@ -10,6 +10,11 @@ public class FireWeapon : MonoBehaviour
     private int fireInterval = 2;
     private float nextTimetoFire = 0;
 
+    private void Awake()
+    {
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player_InputManager>().OnFire += Fire;
+    }
+
     void Fire()
     {
         if (Time.time >= nextTimetoFire)
