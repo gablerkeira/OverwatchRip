@@ -89,8 +89,6 @@ public class Player_InputManager : MonoBehaviour
             OnUlt();
         }
 
-        playerMove.isRunning = Input.GetButton(runButton);
-
         if (Input.GetButtonDown(jumpButton))
         {
             playerMove.Jump();
