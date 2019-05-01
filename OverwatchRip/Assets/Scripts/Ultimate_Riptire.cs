@@ -26,10 +26,10 @@ public class Ultimate_Riptire : MonoBehaviour
 
     private void Update()
     {
-        float percentCharged = (playerStatus.ultCharge / chargeRequired);
+        float percentCharged = ((float)playerStatus.ultCharge / chargeRequired);
         if (percentCharged > 1)
             percentCharged = 1;
-        chargeText.text = ((int)percentCharged * 100).ToString();
+        chargeText.text = ((int)(percentCharged * 100)).ToString();
         chargeCircle.fillAmount = percentCharged;
     }
 
