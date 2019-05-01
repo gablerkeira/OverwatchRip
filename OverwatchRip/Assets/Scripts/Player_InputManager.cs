@@ -8,6 +8,7 @@ public class Player_InputManager : MonoBehaviour
 {
     public event Action OnFire;
     public event Action OnFire2;
+    public event Action OnExplodeMine;
     public event Action OnSpecial;
     public event Action OnUlt;
 
@@ -73,6 +74,11 @@ public class Player_InputManager : MonoBehaviour
             OnFire2();
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            OnExplodeMine();
+        }
+
         if (Input.GetButtonDown(specialButton))
         {
             OnSpecial();
@@ -82,8 +88,6 @@ public class Player_InputManager : MonoBehaviour
         {
             OnUlt();
         }
-
-        playerMove.isRunning = Input.GetButton(runButton);
 
         if (Input.GetButtonDown(jumpButton))
         {
