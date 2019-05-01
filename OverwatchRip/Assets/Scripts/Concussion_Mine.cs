@@ -6,7 +6,6 @@ public class Concussion_Mine : MonoBehaviour
 {
     public bool OnGround;
     public GameObject mine;
-    public GameObject newMine;
     public float explosionForce = 3f;
     public float explosionRadius = 6f;
     public GameObject player;
@@ -25,7 +24,7 @@ public class Concussion_Mine : MonoBehaviour
     {
         if(OnGround == false)
         {
-            newMine = Instantiate(mine, transform.position, transform.rotation);
+            mine = Instantiate(mine, transform.position, transform.rotation);
             OnGround = true;
         }
     }
@@ -34,7 +33,9 @@ public class Concussion_Mine : MonoBehaviour
     {
         if(OnGround == true)
         {
-            newMine.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius);
+            mine.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius);
+            Destroy(mine);
+
             if(playerPos.x == transform.position.x && playerPos.y == transform.position.y)
             {
                 player.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);

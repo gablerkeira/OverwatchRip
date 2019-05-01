@@ -684,7 +684,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   OnGround: 0
   mine: {fileID: 3365584501067841517, guid: 5e15cd78d0bcc9646b43e8b9e61ea198, type: 3}
-  newMine: {fileID: 0}
   explosionForce: 3
   explosionRadius: 6
   player: {fileID: 674983864}
