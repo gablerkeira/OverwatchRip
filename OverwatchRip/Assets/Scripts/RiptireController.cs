@@ -7,7 +7,7 @@ public class RiptireController : MonoBehaviour
 {
     public int damage = 600;
     public float moveSpeed = 12f;
-    public float rotateSpeed = 45f;
+    public float rotateSpeed = 90f;
     public float explosionRadius = 10f;
     public float duration = 10f;
 
@@ -16,6 +16,7 @@ public class RiptireController : MonoBehaviour
     private void Awake()
     {
         StartCoroutine(Countdown());
+        OnExplode += GameObject.FindWithTag("Player").GetComponent<Ultimate_Riptire>().Exploded;
     }
 
     private void Update()
@@ -29,7 +30,9 @@ public class RiptireController : MonoBehaviour
         transform.position += (transform.forward * moveSpeed * Time.deltaTime);
         Quaternion newRotation = transform.rotation;
         Vector3 newEulerAngles = newRotation.eulerAngles;
-        newEulerAngles.x += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+        newEulerAngles.y += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+        newRotation.eulerAngles = newEulerAngles;
+        transform.rotation = newRotation;
     }
 
     IEnumerator Countdown()
@@ -54,5 +57,12 @@ public class RiptireController : MonoBehaviour
                 enemy.GetComponent<Enemy_HP>().TakeDamage(damageDealt);
             }
         }
+        Destroy(this.gameObject);
+        OnExplode();
+    }
+
+    private void OnDestroy()
+    {
+        OnExplode -= GameObject.FindWithTag("Player").GetComponent<Ultimate_Riptire>().Exploded;
     }
 }
