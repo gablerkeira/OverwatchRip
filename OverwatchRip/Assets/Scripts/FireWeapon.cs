@@ -46,6 +46,6 @@ public class FireWeapon : MonoBehaviour
     IEnumerator ReloadingTime()
     {
         yield return new WaitForSeconds(reloadTime);
-        currClip = 6;
+        currClip = 5;
     }
 }
