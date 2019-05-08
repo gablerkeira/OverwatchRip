@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
-    public float grenadeTime = 3;
+    //public float grenadeTime = 3;
     public float explosionForce = 3;
     public float explosionRadius = 2;
     public float upwardForce = 3;
 
-    //[SerializeField] int bounces = 0;
-    //[SerializeField] int maxBounces = 0;
+    [SerializeField] int bounces = 0;
+    private int maxBounces = 3;
+    private bool bounced = false;
 
     [SerializeField] int minDamage = 10;
     [SerializeField] int maxDamage = 80;
 
     Player_Status ultimate;
-    // Update is called once per frame
+
     void Start()
     {
-        StartCoroutine(ExplodeTimer());
+        //StartCoroutine(ExplodeTimer());
         ultimate = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Status>();
     }
 
@@ -32,18 +33,28 @@ public class Grenade : MonoBehaviour
             Explode();
         }
 
-        //bounces += 1;
-        //if (bounces >= maxBounces)
-        //{
-        //    this.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
-        //    Destroy(this.gameObject);
-        //}
+        StartCoroutine(Bounced());
     }
-    IEnumerator ExplodeTimer()
+
+    IEnumerator Bounced()
     {
-        yield return new WaitForSeconds(grenadeTime);
-        Explode();
+        if (bounced == false)
+        {
+            bounced = true;
+            bounces += 1;
+            if (bounces > maxBounces)
+            {
+                Explode();
+            }
+        }
+        yield return new WaitForSeconds(.2f);
+        bounced = false;
     }
+    //IEnumerator ExplodeTimer()
+    //{
+    //    yield return new WaitForSeconds(grenadeTime);
+    //    Explode();
+    //}
 
     void Explode()
     {
