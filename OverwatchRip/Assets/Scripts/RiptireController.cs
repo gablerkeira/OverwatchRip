@@ -26,7 +26,14 @@ public class RiptireController : MonoBehaviour
         {
             Detonate();
         }
-
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, transform.forward, out hit, .5f))
+        {
+            if (hit.collider.CompareTag("Climbable"))
+            {
+                transform.position += Vector3.up * moveSpeed * Time.deltaTime;
+            }
+        }
         transform.position += (transform.forward * moveSpeed * Time.deltaTime);
         Quaternion newRotation = transform.rotation;
         Vector3 newEulerAngles = newRotation.eulerAngles;
