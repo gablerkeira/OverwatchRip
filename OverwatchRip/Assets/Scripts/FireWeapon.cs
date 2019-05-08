@@ -13,19 +13,16 @@ public class FireWeapon : MonoBehaviour
     private float nextTimetoFire = 0;
 
     public Transform weaponPoint;
-    Player_Status ultimate;
 
     private void Awake()
     {
         GameObject.FindGameObjectWithTag("Player").GetComponent<Player_InputManager>().OnFire += Fire;
-        ultimate = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Status>();
     }
 
     void Fire()
     {
-        if (Time.time >= nextTimetoFire)
+        if (Time.time >= nextTimetoFire && currClip > 0)
         {
-            ultimate.ultCharge += 10;
             currClip -= 1;
             nextTimetoFire = Time.time + .65f / fireInterval;
             //Vector3 cam = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));

@@ -11,18 +11,24 @@ public class Grenade : MonoBehaviour
 
     //[SerializeField] int bounces = 0;
     //[SerializeField] int maxBounces = 0;
-    [SerializeField] int damage = 20;
 
+    [SerializeField] int minDamage = 10;
+    [SerializeField] int maxDamage = 80;
+
+    Player_Status ultimate;
     // Update is called once per frame
     void Start()
     {
         StartCoroutine(ExplodeTimer());
+        ultimate = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Status>();
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("Enemy"))
         {
+            collision.transform.GetComponent<Enemy_HP>().TakeDamage(50);
+            ultimate.ultCharge += 50;
             Explode();
         }
 
@@ -49,9 +55,8 @@ public class Grenade : MonoBehaviour
             {
                 enemy.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
                 //Calculate damage dealt
-                int damageDealt = (int)Mathf.Lerp(80, 10, enemyDistance / explosionRadius);
-                Debug.Log("Dist/Rad - " + enemyDistance/explosionRadius);
-                Debug.Log("Damage - " + damageDealt);
+                int damageDealt = (int)Mathf.Lerp(maxDamage, minDamage, enemyDistance / explosionRadius);
+                ultimate.ultCharge += damageDealt;
                 enemy.GetComponent<Enemy_HP>().TakeDamage(damageDealt);
             }
         }
