@@ -6,11 +6,13 @@ public class FireWeapon : MonoBehaviour
 {
     public int forceFired = 1000;
     public GameObject projectile;
-    public int currClip = 6;
-    public int reloadTime = 3;
+    public int currClip = 5;
+    public float reloadTime = 1.55f;
 
     private int fireInterval = 2;
     private float nextTimetoFire = 0;
+
+    public Transform weaponPoint;
 
     private void Awake()
     {
@@ -22,9 +24,10 @@ public class FireWeapon : MonoBehaviour
         if (Time.time >= nextTimetoFire)
         {
             currClip -= 1;
-            nextTimetoFire = Time.time + 1 / fireInterval;
-            GameObject go = Instantiate(projectile, this.transform.position, Quaternion.identity);
-            go.GetComponent<Rigidbody>().AddForce(Vector3.forward * forceFired);
+            nextTimetoFire = Time.time + .65f / fireInterval;
+            //Vector3 cam = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+            GameObject go = Instantiate(projectile, weaponPoint.transform.position, Quaternion.identity);
+            go.GetComponent<Rigidbody>().AddForce(Camera.main.transform.forward * forceFired);
             if (currClip <= 0)
             {
                 Reload();
