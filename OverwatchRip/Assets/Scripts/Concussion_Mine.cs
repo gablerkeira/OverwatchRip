@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Concussion_Mine : MonoBehaviour
 {
-    public bool OnGround;
+    public float onGround;
     public GameObject mine;
-    private GameObject mineActive;
+    private GameObject mineActive1;
+    private GameObject mineActive2;
     public float explosionForce = 3f;
     public float explosionRadius = 6f;
     public GameObject player;
@@ -21,30 +22,62 @@ public class Concussion_Mine : MonoBehaviour
         playerPos = GameObject.FindGameObjectWithTag("Player").transform.position;
         GetComponent<Player_InputManager>().OnFire2 += PlaceMine;
         GetComponent<Player_InputManager>().OnExplodeMine += Explode;
-        OnGround = false;
+        onGround = 0;
     }
 
     public void PlaceMine()
     {
-        if (timestamp <= Time.time)
+        if (mineCharges == 2)
         {
-            if (OnGround == false)
+            if (timestamp <= Time.time)
             {
-                mineActive = Instantiate(mine, transform.position, transform.rotation);
-                OnGround = true;
-                cooldownTime = 8f;
-                timestamp = Time.time + cooldownTime;
+                if (onGround < 2)
+                {
+                    mineActive1 = Instantiate(mine, transform.position, transform.rotation);
+                    onGround = 1;
+                    cooldownTime = 8f;
+                    timestamp = Time.time + cooldownTime;
+                    mineCharges--;
+                }
+            }
+        }
+
+        if (mineCharges == 1)
+        {
+            if (timestamp <= Time.time)
+            {
+                if (onGround < 2)
+                {
+                    mineActive2 = Instantiate(mine, transform.position, transform.rotation);
+                    onGround = 2;
+                    cooldownTime = 16f;
+                    timestamp = Time.time + cooldownTime;
+                    mineCharges--;
+                }
             }
         }
     }
 
     public void Explode()
     {
-        if (OnGround == true)
+        if (onGround > 0)
         {
-            mineActive.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
-            Destroy(mineActive);
-            OnGround = false;
+            if (mineActive1 != null)
+            {
+                mineActive1.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                Destroy(mineActive1);
+                onGround--;
+                mineCharges++;
+            }
+
+            if (mineActive2 != null)
+            {
+                mineActive2.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+                Destroy(mineActive2);
+                onGround--;
+                mineCharges++;
+            }
+
 
             if (playerPos.x == transform.position.x && playerPos.y == transform.position.y)
             {
