@@ -6,10 +6,14 @@ public class Concussion_Mine : MonoBehaviour
 {
     public bool OnGround;
     public GameObject mine;
+    private GameObject mineActive;
     public float explosionForce = 3f;
     public float explosionRadius = 6f;
     public GameObject player;
     public Vector3 playerPos;
+    private float cooldownTime = 0f;
+    private float timestamp;
+    public int mineCharges = 2;
 
     private void Awake()
     {
@@ -22,21 +26,27 @@ public class Concussion_Mine : MonoBehaviour
 
     public void PlaceMine()
     {
-        if(OnGround == false)
+        if (timestamp <= Time.time)
         {
-            mine = Instantiate(mine, transform.position, transform.rotation);
-            OnGround = true;
+            if (OnGround == false)
+            {
+                mineActive = Instantiate(mine, transform.position, transform.rotation);
+                OnGround = true;
+                cooldownTime = 8f;
+                timestamp = Time.time + cooldownTime;
+            }
         }
     }
 
     public void Explode()
     {
-        if(OnGround == true)
+        if (OnGround == true)
         {
-            mine.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius);
-            Destroy(mine);
+            mineActive.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            Destroy(mineActive);
+            OnGround = false;
 
-            if(playerPos.x == transform.position.x && playerPos.y == transform.position.y)
+            if (playerPos.x == transform.position.x && playerPos.y == transform.position.y)
             {
                 player.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, transform.position, explosionRadius);
             }
