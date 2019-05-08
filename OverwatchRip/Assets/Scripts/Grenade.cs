@@ -16,21 +16,31 @@ public class Grenade : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        StartCoroutine(Explode());
+        StartCoroutine(ExplodeTimer());
     }
 
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    bounces += 1;
-    //    if (bounces >= maxBounces)
-    //    {
-    //        this.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
-    //        Destroy(this.gameObject);
-    //    }
-    //}
-    IEnumerator Explode()
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("Enemy"))
+        {
+            Explode();
+        }
+
+        //bounces += 1;
+        //if (bounces >= maxBounces)
+        //{
+        //    this.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
+        //    Destroy(this.gameObject);
+        //}
+    }
+    IEnumerator ExplodeTimer()
     {
         yield return new WaitForSeconds(grenadeTime);
+        Explode();
+    }
+
+    void Explode()
+    {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (GameObject enemy in enemies)
         {
