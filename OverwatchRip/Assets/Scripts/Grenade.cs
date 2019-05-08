@@ -11,7 +11,7 @@ public class Grenade : MonoBehaviour
 
     //[SerializeField] int bounces = 0;
     //[SerializeField] int maxBounces = 0;
-    [SerializeField] int damage = 130;
+    [SerializeField] int damage = 20;
 
     // Update is called once per frame
     void Start()
@@ -31,7 +31,18 @@ public class Grenade : MonoBehaviour
     IEnumerator Explode()
     {
         yield return new WaitForSeconds(grenadeTime);
-        this.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            float enemyDistance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (enemyDistance <= explosionRadius) //Is the enemy in range of the explosion
+            {
+                enemy.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
+                //Calculate damage dealt
+                int damageDealt = (int)Mathf.Lerp(80, 10, enemyDistance / explosionRadius);
+                enemy.GetComponent<Enemy_HP>().TakeDamage(damageDealt);
+            }
+        }
         Destroy(this.gameObject);
     }
 }

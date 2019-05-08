@@ -87,7 +87,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4474202351472986197}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 29c04dcb0dec76442972f2013d11e1d2, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -121,3 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7b55285eb033fc4e9e33140a51a5876, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  grenadeTime: 3
+  explosionForce: 400
+  explosionRadius: 4
+  upwardForce: 3
+  damage: 130
