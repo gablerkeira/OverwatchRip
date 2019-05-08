@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 555405626022090916}
   - component: {fileID: 9201526374565912365}
   - component: {fileID: 5738159799981743512}
+  - component: {fileID: 4387635667785745765}
   m_Layer: 0
   m_Name: Trap
   m_TagString: Untagged
@@ -108,3 +109,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &4387635667785745765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808004939736566952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8079cfda5b24c3e4a825c1a7592e157a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

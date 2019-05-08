@@ -7,6 +7,7 @@ public class Steel_Trap : MonoBehaviour
     public float trapCooldown;
     public GameObject trap;
     float trapTime;
+    
 
     // Update is called once per frame
     private void Awake()
@@ -23,7 +24,7 @@ public class Steel_Trap : MonoBehaviour
     {
         if(trapTime >= trapCooldown)
         {
-            Instantiate(trap, transform.position, transform.rotation);
+            Instantiate(trap, transform.position + transform.forward, transform.rotation);
             trapTime = 0;
         }
     }
