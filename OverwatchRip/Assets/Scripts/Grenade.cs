@@ -50,6 +50,8 @@ public class Grenade : MonoBehaviour
                 enemy.gameObject.GetComponent<Rigidbody>().AddExplosionForce(explosionForce, this.transform.position, explosionRadius, upwardForce);
                 //Calculate damage dealt
                 int damageDealt = (int)Mathf.Lerp(80, 10, enemyDistance / explosionRadius);
+                Debug.Log("Dist/Rad - " + enemyDistance/explosionRadius);
+                Debug.Log("Damage - " + damageDealt);
                 enemy.GetComponent<Enemy_HP>().TakeDamage(damageDealt);
             }
         }

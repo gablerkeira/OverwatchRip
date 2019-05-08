@@ -25,7 +25,7 @@ public class FireWeapon : MonoBehaviour
     {
         if (Time.time >= nextTimetoFire)
         {
-            ultimate.ultCharge += 1;
+            ultimate.ultCharge += 10;
             currClip -= 1;
             nextTimetoFire = Time.time + .65f / fireInterval;
             //Vector3 cam = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
